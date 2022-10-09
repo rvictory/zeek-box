@@ -39,12 +39,26 @@ ips.each do |ip|
 end
 
 # Create the communicated IP list
+dest_ips = {}
+ips = source_ips.empty? ? zeek_manager.conn_logs.unique_source_hosts(start_ts, finish_ts) : source_ips
+ips.each do |ip|
+  dest_ips[ip] = zeek_manager.conn_logs.unique_destination_ips_for_host(ip, start_ts, finish_ts)
+end
 
 # Create the HTTP list
 
 # Create the log Zip file
 
 # Put together the HTML and attach log zip
+puts "------------------------------------"
+puts "Destination IP Report"
+puts "------------------------------------"
+dest_ips.each do |ip, entries|
+  puts "Source IP: #{ip}"
+  puts entries.map {|x| "\t#{x}"}.join("\n")
+  puts
+end
+puts
 puts "------------------------------------"
 puts "Domain Name Report"
 puts "------------------------------------"

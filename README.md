@@ -24,6 +24,9 @@ Zeek logs (Zip file) and perhaps a full PCAP as well.
 ## Usage
 Bare-bones so far, just testing out how it might work. See `collector.rb` for the basic skeleton
 
+## Things to use later:
+* https://github.com/SebastianJ/nordvpn-api
+
 #### Test Data
 Some of the test data (in `tests/data/logs`) has been sourced from https://github.com/brimdata/zed-sample-data and is licensed under the
 license terms found in that repository (Creative Commons Attribution-ShareAlike 4.0 International License as of October 9th, 2022)
