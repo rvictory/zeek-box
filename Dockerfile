@@ -9,3 +9,10 @@ RUN apt-get update && \
     echo 'LogAscii::use_json=T;' >> /opt/zeek/share/zeek/site/local.zeek
 
 RUN apt-get install -y ruby-full
+
+# hostapd stuff taken from https://github.com/offlinehacker/docker-ap/blob/master/Dockerfile
+RUN apt-get install -y bash hostapd iptables dhcp iproute2 iw && curl -sSL https://get.docker.com | sh
+RUN echo "" > /var/lib/dhcp/dhcpd.leases
+ADD wlanstart.sh /bin/wlanstart.sh
+
+ENTRYPOINT [ "/bin/wlanstart.sh" ]
