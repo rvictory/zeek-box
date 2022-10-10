@@ -12,7 +12,7 @@ RUN apt-get install -y ruby-full
 
 # hostapd stuff taken from https://github.com/offlinehacker/docker-ap/blob/master/Dockerfile
 RUN apt-get install -y bash hostapd iptables dhcpd iproute2 iw && curl -sSL https://get.docker.com | sh
-RUN echo "" > /var/lib/dhcp/dhcpd.leases
+#RUN echo "" > /var/lib/dhcp/dhcpd.leases
 ADD wlanstart.sh /bin/wlanstart.sh
 
 ENTRYPOINT [ "/bin/wlanstart.sh" ]
