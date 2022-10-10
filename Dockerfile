@@ -15,4 +15,4 @@ RUN apt-get install -y bash hostapd iptables dhcpd iproute2 iw && curl -sSL http
 #RUN echo "" > /var/lib/dhcp/dhcpd.leases
 ADD wlanstart.sh /bin/wlanstart.sh
 
-ENTRYPOINT [ "/bin/wlanstart.sh" ]
+#ENTRYPOINT [ "/bin/wlanstart.sh" ]
