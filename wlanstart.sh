@@ -107,6 +107,12 @@ else
    iptables -D FORWARD -i ${INTERFACE} -j ACCEPT > /dev/null 2>&1 || true
    iptables -A FORWARD -i ${INTERFACE} -j ACCEPT
 fi
+
+if [[ "$SHARE_METHOD" == "nat" ]]; then
+            iptables -w -t nat -D POSTROUTING -s ${GATEWAY%.*}.0/24 ! -o ${WIFI_IFACE} -j MASQUERADE || die
+            iptables -w -D FORWARD -i ${WIFI_IFACE} -s ${GATEWAY%.*}.0/24 -j ACCEPT
+            iptables -w -D FORWARD -i ${INTERNET_IFACE} -d ${GATEWAY%.*}.0/24 -j ACCEPT
+
 echo "Configuring DHCP server .."
 
 cat > "/etc/dhcp/dhcpd.conf" <<EOF
