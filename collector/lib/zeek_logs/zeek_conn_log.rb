@@ -1,6 +1,6 @@
 # Manages the Zeek Conn log
 require "json"
-require_relative "./ek_log_base"
+require_relative "./zeek_log_base"
 
 class ZeekConnLog < ZeekLogBase
 
