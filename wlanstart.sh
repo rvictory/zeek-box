@@ -59,6 +59,8 @@ EOF
 fi
 
 # unblock wlan
+ifconfig ${INTERFACE} down
+ifconfig ${INTERFACE} up
 rfkill unblock wlan
 
 echo "Setting interface ${INTERFACE}"
