@@ -1,6 +1,6 @@
 # Manages the Zeek DNS log
 require "json"
-require_relative "./zeek_log_base"
+require_relative "./ek_log_base"
 
 class ZeekDNSLog < ZeekLogBase
 

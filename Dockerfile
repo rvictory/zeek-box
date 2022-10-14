@@ -14,5 +14,6 @@ RUN apt-get install -y ruby-full
 RUN apt-get install -y bash hostapd iptables isc-dhcp-server iproute2 iw rfkill && curl -sSL https://get.docker.com | sh
 RUN mkdir -p /var/lib/dhcp/ && echo "" > /var/lib/dhcp/dhcpd.leases
 ADD wlanstart.sh /bin/wlanstart.sh
+ADD collector/ /opt/collector/
 
 #ENTRYPOINT [ "/bin/wlanstart.sh" ]

@@ -1,5 +1,5 @@
 # Manages zeek logs
-require_relative "./zeek_logs/zeek_dns_log"
+require_relative "./zeek_logs/ek_dns_log"
 require_relative "./zeek_logs/zeek_conn_log"
 
 class ZeekManager
