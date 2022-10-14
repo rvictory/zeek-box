@@ -24,6 +24,10 @@ Zeek logs (Zip file) and perhaps a full PCAP as well.
 ## Usage
 Bare-bones so far, just testing out how it might work. See `collector.rb` for the basic skeleton
 
+To run the docker container: 
+
+`sudo docker run -i -t -e INTERFACE=wlan0 -e OUTGOINGS=eth0 -e HT_CAPAB=[HT40][SHORT-GI-20][DSSS_CCK-40] --net host --privileged zeek_box`
+
 ## Things to use later:
 * https://github.com/SebastianJ/nordvpn-api
 
