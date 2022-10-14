@@ -53,7 +53,7 @@ rsn_pairwise=CCMP
 wpa_ptk_rekey=600
 ieee80211n=1
 ht_capab=${HT_CAPAB}
-wmm_enabled=1
+wmm_enabled=0
 EOF
 
 fi
