@@ -129,4 +129,4 @@ echo "Starting DHCP server .."
 dhcpd ${INTERFACE}
 
 echo "Starting HostAP daemon ..."
-/usr/sbin/hostapd /etc/hostapd.conf
+/usr/sbin/hostapd -B /etc/hostapd.conf
