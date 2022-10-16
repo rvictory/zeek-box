@@ -67,7 +67,7 @@ ip addr add ${AP_ADDR}/24 dev ${INTERFACE}
 
 sh -c "echo 1 > /proc/sys/net/ipv4/ip_forward"
 
-iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+#iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
 
 service dnsmasq start
 /usr/sbin/hostapd -B -f ~/hostapd.log /etc/hostapd.conf &
@@ -75,13 +75,24 @@ service dnsmasq start
 # Start Zeek TODO: need to configure zeekctl to use wlan0
 #/opt/zeek/bin/zeekctl start
 
-# Configure the VPN iptables rules
-#iptables -F
-#iptables -t nat -F
-#iptables -X
-#iptables -t nat -A POSTROUTING -o tun0 -j MASQUERADE
-#iptables-nft -C FORWARD -i eth0 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT || iptables-nft -A FORWARD -i tun0 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT
-#iptables-nft -C FORWARD -i wlan0 -o tun0 -j ACCEPT || iptables-nft -A FORWARD -i wlan0 -o tun0 -j ACCEPT
+# We want to still be able to SSH to the box even with OpenVPN turned on (https://serverfault.com/questions/659955/allowing-ssh-on-a-server-with-an-active-openvpn-client)
+# set "connection" mark of connection from eth0 when first packet of connection arrives
+iptables -t mangle -A PREROUTING -i eth0 -m conntrack --ctstate NEW -j CONNMARK --set-mark 1234
+# set "firewall" mark for response packets in connection with our connection mark
+iptables -t mangle -A OUTPUT -m connmark --mark 1234 -j MARK --set-mark 4321
+# our routing table with eth0 as gateway interface
+ip route add default dev eth0 table 3412
+# route packets with our firewall mark using our routing table
+ip rule add fwmark 4321 table 3412
 
 # Start the VPN
-#openvpn --config $OPEN_VPN_CONF_FILE
+openvpn --config $OPEN_VPN_CONF_FILE --daemon
+
+# Configure the VPN iptables rules
+iptables -F
+iptables -t nat -F
+iptables -X
+iptables -t nat -A POSTROUTING -o tun0 -j MASQUERADE
+iptables-nft -C FORWARD -i tun0 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT || iptables-nft -A FORWARD -i tun0 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+iptables-nft -C FORWARD -i wlan0 -o tun0 -j ACCEPT || iptables-nft -A FORWARD -i wlan0 -o tun0 -j ACCEPT
+
