@@ -15,16 +15,16 @@ true ${DRIVER:=nl80211}
 true ${HT_CAPAB:=[HT40-][SHORT-GI-20][SHORT-GI-40]}
 true ${MODE:=host}
 
-systemctl stop hostapd
-systemctl stop dnsmasq
+#systemctl stop hostapd
+#systemctl stop dnsmasq
 
-cat > "/etc/dhcpd.conf" <<EOF
-interface wlan0
-    static ip_address=${AP_ADDR}/24
-    nohook wpa_supplicant
-EOF
+#cat > "/etc/dhcpd.conf" <<EOF
+#interface wlan0
+#    static ip_address=${AP_ADDR}/24
+#   nohook wpa_supplicant
+#EOF
 
-systemctl restart dhcpcd
+#systemctl restart dhcpcd
 
 
 cat > "/etc/hostapd.conf" <<EOF
