@@ -11,9 +11,14 @@ RUN apt-get update && \
 RUN apt-get install -y ruby-full
 
 # hostapd stuff taken from https://github.com/offlinehacker/docker-ap/blob/master/Dockerfile
-RUN apt-get install -y bash hostapd iptables isc-dhcp-server iproute2 iw rfkill net-tools && curl -sSL https://get.docker.com | sh
-RUN mkdir -p /var/lib/dhcp/ && echo "" > /var/lib/dhcp/dhcpd.leases
+#RUN apt-get install -y bash hostapd iptables isc-dhcp-server iproute2 iw rfkill net-tools && curl -sSL https://get.docker.com | sh
+RUN apt-get install -y hostapd dnsmasq iptables net-tools rfkill iw bash
+#RUN mkdir -p /var/lib/dhcp/ && echo "" > /var/lib/dhcp/dhcpd.leases
 ADD wlanstart.sh /bin/wlanstart.sh
 ADD collector/ /opt/collector/
+
+# OpenVPN
+RUN apt-get install -y openvpn wget vim
+ADD start.sh /bin/start.sh
 
 #ENTRYPOINT [ "/bin/wlanstart.sh" ]

@@ -24,9 +24,20 @@ Zeek logs (Zip file) and perhaps a full PCAP as well.
 ## Usage
 Bare-bones so far, just testing out how it might work. See `collector.rb` for the basic skeleton
 
+### Building the container
+
 To run the docker container: 
 
 `sudo docker run -i -t -e INTERFACE=wlan0 -e OUTGOINGS=eth0 -e HT_CAPAB=[HT40][SHORT-GI-20][DSSS_CCK-40] --net host --privileged zeek_box`
+
+Note: If you want to use OpenVPN username/password auth, for now you need to volume bind an auth.txt file into the container
+at `/etc/openvpn/auth.txt` with your username on one line and your password on the next. You also need to bring in your OpenVPN
+configuration files and add them to the container and then set the environmental variable `OPEN_VPN_CONF_FILE` to the path to the file.
+One final note: in the .ovpn files, change `auth-user-pass` to `auth-user-pass auth.txt`.
+
+NordVPN Conf files: https://nordvpn.com/ovpn/
+
+TODO This whole explanation above needs to be cleaned up
 
 ## Things to use later:
 * https://github.com/SebastianJ/nordvpn-api
