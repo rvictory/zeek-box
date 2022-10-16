@@ -21,4 +21,4 @@ ADD collector/ /opt/collector/
 RUN apt-get install -y openvpn wget vim
 ADD start.sh /bin/start.sh
 
-#ENTRYPOINT [ "/bin/wlanstart.sh" ]
+ENTRYPOINT [ "/bin/start.sh" ]
