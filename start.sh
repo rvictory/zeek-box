@@ -34,7 +34,7 @@ ssid=${SSID}
 hw_mode=${HW_MODE}
 channel=${CHANNEL}
 macaddr_acl=0
-ignore_broadcase_ssid=0
+ignore_broadcast_ssid=0
 
 auth_algs=1
 wpa=2
