@@ -84,8 +84,8 @@ echo "Starting hostapd"
 /usr/sbin/hostapd -B -f ~/hostapd.log /etc/hostapd.conf &
 
 # Start Zeek
-mkdir ~/logs
-cd ~/logs
+mkdir -p /opt/zeek_logs
+cd /opt/zeek_logs
 echo "Starting Zeek"
 /opt/zeek/bin/zeek -i wlan0 'LogAscii::use_json=T;' &
 
