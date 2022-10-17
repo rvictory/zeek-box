@@ -94,7 +94,7 @@ service dnsmasq start
 # Allow SSH to still work over eth0 (https://serverfault.com/questions/425493/anonymizing-openvpn-allow-ssh-access-to-internal-server)
 echo "201 novpn" >> /etc/iproute2/rt_tables
 ip rule add fwmark 65 table novpn
-ip route add default via 192.168.3.1 dev eth0 table novpn # TODO this shouldn't use a hard-coded IP
+ip route add default via 192.168.3.1 dev eth0 table novpn || true # TODO this shouldn't use a hard-coded IP
 ip route flush cache
 iptables -t mangle -A OUTPUT -p tcp --sport 22 -j MARK --set-mark 65
 
