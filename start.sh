@@ -57,6 +57,7 @@ server=1.1.1.1       # Use Cloudflare DNS
 dhcp-range=192.168.220.50,192.168.220.150,12h # IP range and lease time
 EOF
 
+ip addr flush dev ${INTERFACE}
 ifconfig ${INTERFACE} down
 ifconfig ${INTERFACE} up
 rfkill unblock wlan
