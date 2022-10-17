@@ -75,26 +75,32 @@ service dnsmasq start
 # Start Zeek TODO: need to configure zeekctl to use wlan0
 #/opt/zeek/bin/zeekctl start
 
-# Start the VPN
-openvpn --config $OPEN_VPN_CONF_FILE --daemon
-
-# Configure the VPN iptables rules
 iptables -F
 iptables -t nat -F
 iptables -X
-iptables -t nat -A POSTROUTING -o tun0 -j MASQUERADE
-iptables-nft -C FORWARD -i tun0 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT || iptables-nft -A FORWARD -i tun0 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT
-iptables-nft -C FORWARD -i wlan0 -o tun0 -j ACCEPT || iptables-nft -A FORWARD -i wlan0 -o tun0 -j ACCEPT
 
 # Allow SSH to still work over eth0 (https://serverfault.com/questions/425493/anonymizing-openvpn-allow-ssh-access-to-internal-server)
 echo "201 novpn" >> /etc/iproute2/rt_tables
 ip rule add fwmark 65 table novpn
-ip route add default via 192.168.3.186 dev eth0 table novpn # TODO this shouldn't use a hard-coded IP
+ip route add default via 192.168.3.1 dev eth0 table novpn # TODO this shouldn't use a hard-coded IP
 ip route flush cache
 iptables -t mangle -A OUTPUT -p tcp --sport 22 -j MARK --set-mark 65
+
+# Start the VPN
+openvpn --config $OPEN_VPN_CONF_FILE --daemon
+
+# Configure the VPN iptables rules
+iptables -t nat -A POSTROUTING -o tun0 -j MASQUERADE
+iptables-nft -C FORWARD -i tun0 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT || iptables-nft -A FORWARD -i tun0 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+iptables-nft -C FORWARD -i wlan0 -o tun0 -j ACCEPT || iptables-nft -A FORWARD -i wlan0 -o tun0 -j ACCEPT
 iptables -A INPUT -i tun0 -p tcp -m tcp --dport 22 -j DROP
 
-while true; do sleep 1; done;
+# Sleep for a bit and then quit/undo
+sleep 120
+pkill openvpn
+iptables -F
+iptables -t nat -F
+iptables -X
 
 # We want to still be able to SSH to the box even with OpenVPN turned on (https://serverfault.com/questions/659955/allowing-ssh-on-a-server-with-an-active-openvpn-client)
 # set "connection" mark of connection from eth0 when first packet of connection arrives
