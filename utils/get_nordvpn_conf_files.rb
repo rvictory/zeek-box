@@ -1,5 +1,7 @@
+# encoding: UTF-8
 # Run this from a directory to add all of the NordVPN configuration files to that directory
 
+ENV["LANG"] = "C.UTF-8"
 html = `curl https://nordvpn.com/ovpn/`
 
 file_list = []
