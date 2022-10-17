@@ -1,8 +1,8 @@
-build_docker:
+build:
 	git pull
 	sudo docker build -t zeek_box .
 
-run_docker:
+run:
 	mkdir -p /home/pi/zeek_logs
 	sudo docker run -d \
         -e INTERFACE=wlan0 \
@@ -14,5 +14,8 @@ run_docker:
         -e OPEN_VPN_CONF_FILE=/opt/openvpn/us2853.nordvpn.com.udp1194.ovpn \
         --net host --privileged --name zeek_box_instance zeek_box /bin/bash
 
-stop_docker:
+stop:
 	sudo docker kill zeek_box_instance
+
+logs:
+	sudo docker logs zeek_box_instance
