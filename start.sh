@@ -78,9 +78,9 @@ service dnsmasq start
 #EOF
 #/opt/zeek/bin/zeekctl start
 
-iptables -F
-iptables -t nat -F
-iptables -X
+#iptables -F
+#iptables -t nat -F
+#iptables -X
 
 # Allow SSH to still work over eth0 (https://serverfault.com/questions/425493/anonymizing-openvpn-allow-ssh-access-to-internal-server)
 echo "201 novpn" >> /etc/iproute2/rt_tables
