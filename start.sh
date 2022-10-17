@@ -4,7 +4,6 @@
 #/bin/wlanstart.sh
 
 set -eE -o functrace
-
 failure() {
   local lineno=$1
   local msg=$2
@@ -79,7 +78,9 @@ sh -c "echo 1 > /proc/sys/net/ipv4/ip_forward"
 
 #iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
 
+echo "Starting dnsmasq"
 service dnsmasq start
+echo "Starting hostapd"
 /usr/sbin/hostapd -B -f ~/hostapd.log /etc/hostapd.conf &
 
 # Start Zeek TODO: need to configure zeekctl to use wlan0
@@ -92,13 +93,19 @@ service dnsmasq start
 #iptables -X
 
 # Allow SSH to still work over eth0 (https://serverfault.com/questions/425493/anonymizing-openvpn-allow-ssh-access-to-internal-server)
+echo "Setting RT Table"
 echo "201 novpn" >> /etc/iproute2/rt_tables
+echo "Adding fwmark ip rule"
 ip rule add fwmark 65 table novpn
+echo "Adding novpn route"
 ! ip route add default via 192.168.3.1 dev eth0 table novpn || true # TODO this shouldn't use a hard-coded IP
+echo "Flushing the route cache"
 ip route flush cache
+echo "Adding the iptables rule to tag the traffic"
 iptables -t mangle -A OUTPUT -p tcp --sport 22 -j MARK --set-mark 65
 
 # Start the VPN
+echo "Starting OpenVPN"
 openvpn --config $OPEN_VPN_CONF_FILE --daemon
 
 # Configure the VPN iptables rules
