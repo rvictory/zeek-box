@@ -86,6 +86,8 @@ iptables -t nat -A POSTROUTING -o tun0 -j MASQUERADE
 iptables-nft -C FORWARD -i tun0 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT || iptables-nft -A FORWARD -i tun0 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT
 iptables-nft -C FORWARD -i wlan0 -o tun0 -j ACCEPT || iptables-nft -A FORWARD -i wlan0 -o tun0 -j ACCEPT
 
+while true; do sleep 1; done;
+
 # We want to still be able to SSH to the box even with OpenVPN turned on (https://serverfault.com/questions/659955/allowing-ssh-on-a-server-with-an-active-openvpn-client)
 # set "connection" mark of connection from eth0 when first packet of connection arrives
 #iptables -t mangle -A PREROUTING -i eth0 -m conntrack --ctstate NEW -j CONNMARK --set-mark 1234

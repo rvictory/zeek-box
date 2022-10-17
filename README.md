@@ -25,10 +25,22 @@ Zeek logs (Zip file) and perhaps a full PCAP as well.
 Bare-bones so far, just testing out how it might work. See `collector.rb` for the basic skeleton
 
 ### Building the container
-
+To build:
+1. Clone the repo: `git clone https://github.com/rvictory/zeek-box`
+2. Build the container: `cd zeek-box && sudo docker build -t zeek_box .`
 To run the docker container: 
 
-`sudo docker run -i -t -e INTERFACE=wlan0 -e OUTGOINGS=eth0 -e HT_CAPAB=[HT40][SHORT-GI-20][DSSS_CCK-40] --net host --privileged zeek_box`
+```bash
+sudo docker run -d \
+    -e INTERFACE=wlan0 \
+    -e OUTGOINGS=eth0 \
+    -e HT_CAPAB=[HT40][SHORT-GI-20][DSSS_CCK-40] \
+    -v/home/pi/zeek-box/open_vpn_conf_files:/opt/openvpn \
+    -v/home/pi/zeek-box/open_vpn_conf_files/auth.txt:/etc/openvpn/auth.txt \
+    -e OPEN_VPN_CONF_FILE=/opt/openvpn/us2853.nordvpn.com.udp1194.ovpn \
+    --net host --privileged zeek_box /bin/bash
+```
+
 
 Note: If you want to use OpenVPN username/password auth, for now you need to volume bind an auth.txt file into the container
 at `/etc/openvpn/auth.txt` with your username on one line and your password on the next. You also need to bring in your OpenVPN
