@@ -6,6 +6,7 @@ run:
 	mkdir -p /home/pi/zeek_logs
 	mkdir -p /home/pi/zeek-box/open_vpn_conf_files
 	sudo docker kill zeek_box_instance || true
+	sudo docker rm zeek_box_instance || true
 	sudo docker run -d \
         -e INTERFACE=wlan0 \
         -e OUTGOINGS=eth0 \
