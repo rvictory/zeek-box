@@ -3,6 +3,15 @@
 # Start up the Wireless Access Point
 #/bin/wlanstart.sh
 
+set -eE -o functrace
+
+failure() {
+  local lineno=$1
+  local msg=$2
+  echo "Failed at $lineno: $msg"
+}
+trap 'failure ${LINENO} "$BASH_COMMAND"' ERR
+
 # Default values
 true ${INTERFACE:=wlan0}
 true ${SUBNET:=192.168.220.0}
