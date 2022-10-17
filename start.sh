@@ -73,6 +73,8 @@ service dnsmasq start
 /usr/sbin/hostapd -B -f ~/hostapd.log /etc/hostapd.conf &
 
 # Start Zeek TODO: need to configure zeekctl to use wlan0
+#cat > "/opt/zeek/etc/zeek/" <<EOF
+#EOF
 #/opt/zeek/bin/zeekctl start
 
 iptables -F
@@ -95,12 +97,7 @@ iptables-nft -C FORWARD -i tun0 -o wlan0 -m state --state RELATED,ESTABLISHED -j
 iptables-nft -C FORWARD -i wlan0 -o tun0 -j ACCEPT || iptables-nft -A FORWARD -i wlan0 -o tun0 -j ACCEPT
 iptables -A INPUT -i tun0 -p tcp -m tcp --dport 22 -j DROP
 
-# Sleep for a bit and then quit/undo
-sleep 120
-pkill openvpn
-iptables -F
-iptables -t nat -F
-iptables -X
+while true; do sleep 1; done;
 
 # We want to still be able to SSH to the box even with OpenVPN turned on (https://serverfault.com/questions/659955/allowing-ssh-on-a-server-with-an-active-openvpn-client)
 # set "connection" mark of connection from eth0 when first packet of connection arrives
