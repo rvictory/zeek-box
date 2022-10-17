@@ -83,10 +83,11 @@ service dnsmasq start
 echo "Starting hostapd"
 /usr/sbin/hostapd -B -f ~/hostapd.log /etc/hostapd.conf &
 
-# Start Zeek TODO: need to configure zeekctl to use wlan0
-#cat > "/opt/zeek/etc/zeek/" <<EOF
-#EOF
-#/opt/zeek/bin/zeekctl start
+# Start Zeek
+mkdir ~/logs
+cd ~/logs
+echo "Starting Zeek"
+/opt/zeek/bin/zeek -i wlan0 'LogAscii::use_json=T;' &
 
 #iptables -F
 #iptables -t nat -F
@@ -109,11 +110,13 @@ echo "Starting OpenVPN"
 openvpn --config $OPEN_VPN_CONF_FILE --daemon
 
 # Configure the VPN iptables rules
+echo "Configuring VPN rules so wlan0 goes out tun0"
 iptables -t nat -A POSTROUTING -o tun0 -j MASQUERADE
 iptables-nft -C FORWARD -i tun0 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT || iptables-nft -A FORWARD -i tun0 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT
 iptables-nft -C FORWARD -i wlan0 -o tun0 -j ACCEPT || iptables-nft -A FORWARD -i wlan0 -o tun0 -j ACCEPT
 iptables -A INPUT -i tun0 -p tcp -m tcp --dport 22 -j DROP
 
+echo "Complete, looping indefinitely"
 while true; do sleep 1; done;
 
 # We want to still be able to SSH to the box even with OpenVPN turned on (https://serverfault.com/questions/659955/allowing-ssh-on-a-server-with-an-active-openvpn-client)
