@@ -8,10 +8,10 @@ import urllib.request
 #picdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'pic')
 #libdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'lib')
 import sys
-sys.path.append("./lib/waveshare_epd/")
+sys.path.append("./lib/")
 
 import logging
-import epd2in7
+from waveshare_epd import epd2in7
 #import epdconfig
 #import epd2in7
 import time
