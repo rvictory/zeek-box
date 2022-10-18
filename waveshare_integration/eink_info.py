@@ -26,9 +26,9 @@ try:
     logging.info("init and Clear")
     epd.init()
     epd.Clear(0xFF)
-    font24 = ImageFont.truetype(os.path.join("./resources/", 'Font.ttc'), 24)
-    font18 = ImageFont.truetype(os.path.join("./resources/", 'Font.ttc'), 18)
-    font35 = ImageFont.truetype(os.path.join("./resources/", 'Font.ttc'), 35)
+    font24 = ImageFont.truetype(os.path.join(os.path.realpath(__file__), "./resources/Font.ttc"), 24)
+    font18 = ImageFont.truetype(os.path.join(os.path.realpath(__file__), "./resources/Font.ttc"), 18)
+    font35 = ImageFont.truetype(os.path.join(os.path.realpath(__file__), "./resources/Font.ttc"), 35)
     # Drawing on the Horizontal image
     logging.info("1.Drawing on the Horizontal image...")
     Himage = Image.new('1', (epd.height, epd.width), 255)  # 255: clear the frame

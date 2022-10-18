@@ -19,4 +19,8 @@ RUN apt-get install -y openvpn wget vim
 ADD start.sh /bin/start.sh
 ADD utils/ /opt/utils/
 
+# Default WAP info
+ENV SSID private
+ENV WPA_PASSPHRASE passw0rd
+
 ENTRYPOINT [ "/bin/start.sh" ]
