@@ -72,6 +72,9 @@ end
 str += "\n"
 
 # Send the email
+Mail.defaults do
+  delivery_method :smtp, address: ENV["SMTP_SERVER"], port: (ENV["SMTP_PORT"] || 25).to_i
+end
 mail = Mail.new do
   from    'zeek_reports@raptormail.net'
   to      ENV["REPORT_EMAIL"]

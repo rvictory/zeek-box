@@ -10,6 +10,9 @@ run:
 	sudo docker run -d \
         -e INTERFACE=wlan0 \
         -e OUTGOINGS=eth0 \
+        -e SMTP_SERVER=smtp.fastmail.com \
+        -e SMTP_PORT=465 \
+        -e REPORT_EMAIL=zeek_reports@beerandraptors.com \
         -e HT_CAPAB=[HT40][SHORT-GI-20][DSSS_CCK-40] \
         -v/home/pi/zeek_logs:/opt/zeek_logs \
         -v/home/pi/zeek-box/open_vpn_conf_files:/opt/openvpn \
