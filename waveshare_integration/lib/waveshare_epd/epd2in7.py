@@ -28,7 +28,7 @@
 #
 
 import logging
-sys.path.insert(1, "./")
+sys.path.append("./")
 import epdconfig
 
 # Display resolution
