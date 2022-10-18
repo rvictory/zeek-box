@@ -1,6 +1,6 @@
 # Collects the results of running Zeek for a specified time period
 require_relative 'lib/zeek_manager'
-require "mail"
+require_relative 'lib/ses_emailer'
 
 if ARGV.empty?
   puts "How to use:"
@@ -72,14 +72,5 @@ end
 str += "\n"
 
 # Send the email
-Mail.defaults do
-  delivery_method :smtp, address: ENV["SMTP_SERVER"], port: (ENV["SMTP_PORT"] || 25).to_i
-end
-mail = Mail.new do
-  from    'zeek_reports@raptormail.net'
-  to      ENV["REPORT_EMAIL"]
-  subject "Zeek Report at #{Time.now.to_s}"
-  body    str
-end
-
-mail.deliver
+emailer = SESEmailer.new
+emailer.send_email("Zeek Report at #{Time.now.to_s}", str, 'zeek_reports@raptormail.net', "Zeek Reports", [ENV["REPORT_EMAIL"]], [""])

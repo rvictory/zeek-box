@@ -27,7 +27,7 @@ RUN apt-get update && \
     cd /opt/ && git clone https://github.com/waveshare/e-Paper/ && \
     cd e-Paper/RaspberryPi_JetsonNano/python && pip3 install .
 
-RUN gem install mail
+RUN gem install bundler && cd /opt/collector && bundle install
 
 ADD wlanstart.sh /bin/wlanstart.sh
 ADD collector/ /opt/collector/

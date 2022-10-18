@@ -10,9 +10,10 @@ run:
 	sudo docker run -d \
         -e INTERFACE=wlan0 \
         -e OUTGOINGS=eth0 \
-        -e SMTP_SERVER=smtp.fastmail.com \
-        -e SMTP_PORT=587 \
         -e REPORT_EMAIL=zeek_reports@beerandraptors.com \
+        -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
+        -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
+        -e AWS_REGION=${AWS_REGION} \
         -e HT_CAPAB=[HT40][SHORT-GI-20][DSSS_CCK-40] \
         -v/home/pi/zeek_logs:/opt/zeek_logs \
         -v/home/pi/zeek-box/open_vpn_conf_files:/opt/openvpn \
