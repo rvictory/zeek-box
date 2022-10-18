@@ -29,24 +29,31 @@ btn3 = Button(13)                             # associated with the button
 btn4 = Button(19)                             #
 
 def handleBtnPress(btn):
+    global is_zeek_recording
+    global zeek_start_time
+    global zeek_finish_time
     pinNum = btn.pin.number
     print("Received button press from {}".format(str(pinNum)))
     if pinNum == 5:
         rotate_vpn()
     elif pinNum == 6:
-        zeek_start_time = time.time()
-        is_zeek_recording = True
-        print_ip_info()
-    elif pinNum == 13:
-        zeek_finish_time = time.time()
-        is_zeek_recording = False
-        dump_zeek()
+        if not is_zeek_recording:
+            print("Starting Zeek Recording")
+            zeek_start_time = int(time.time())
+            is_zeek_recording = True
+            print_ip_info()
+        else:
+            print("Stopping Zeek Recording")
+            zeek_finish_time = int(time.time())
+            is_zeek_recording = False
+            dump_zeek()
 
 logging.basicConfig(level=logging.DEBUG)
 
 def dump_zeek():
     printToDisplay("Creating Zeek Report...")
-    os.system("ruby /opt/collector/collector.rb /opt/zeek_logs {}-{} > /opt/zeek_logs/report.txt".format(zeek_start_time, zeek_finish_time)
+    print("ruby /opt/collector/collector.rb /opt/zeek_logs {}-{} > /opt/zeek_logs/report.txt".format(zeek_start_time, zeek_finish_time))
+    os.system("ruby /opt/collector/collector.rb /opt/zeek_logs {}-{} > /opt/zeek_logs/report.txt".format(zeek_start_time, zeek_finish_time))
     print_ip_info()
 
 def printToDisplay(string):
@@ -91,7 +98,7 @@ def print_ip_info():
         draw.text((10, 130), "SSID: " + str(os.environ['SSID']), font=font12, fill=0)
         draw.text((10, 145), "Password: " + str(os.environ['WPA_PASSPHRASE']) + "   ", font=font12, fill=0)
         if is_zeek_recording:
-            draw.text((epd.width - 20, 145), "Z", font=font12, fill=0)
+            draw.text((250, 145), "Z   ", font=font12, fill=0)
 
         #draw.line((20, 50, 70, 100), fill = 0)
         #draw.line((70, 50, 20, 100), fill = 0)

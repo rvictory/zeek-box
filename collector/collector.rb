@@ -14,12 +14,12 @@ create_zip = true
 start_ts = 0
 finish_ts = 0
 if ARGV.length > 1
-  start_ts, finish_ts = ARGV[2].split("-")
+  start_ts, finish_ts = ARGV[1].split("-")
 end
 ignore_dest_ips = []
 
 if ARGV.length > 2
-  source_ips = ARGV[1].split(",")
+  source_ips = ARGV[2].split(",")
 else
   source_ips = []
 end
