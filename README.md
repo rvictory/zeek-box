@@ -21,6 +21,12 @@ on the Pi. I run the malware and interact with it. When I'm done, I hit "stop ca
 and delivers me an email with useful reporting information (summary info) about the session and an attachment with the
 Zeek logs (Zip file) and perhaps a full PCAP as well.
 
+## Pi Setup
+I'm running Ubuntu Server on my pi. Here are some notes:
+* `provision_pi.sh` will attempt to set up your pi
+* You'll need to disable systemd listening on port 53: https://www.linuxuprising.com/2020/07/ubuntu-how-to-free-up-port-53-used-by.html
+* You'll need to enable SPI communication by installing raspi-config and enabling it
+
 ## Usage
 Bare-bones so far, just testing out how it might work. See `collector.rb` for the basic skeleton
 
@@ -28,19 +34,8 @@ Bare-bones so far, just testing out how it might work. See `collector.rb` for th
 To build:
 1. Clone the repo: `git clone https://github.com/rvictory/zeek-box`
 2. Build the container: `cd zeek-box && sudo docker build -t zeek_box .`
-To run the docker container: 
 
-```bash
-sudo docker run -d \
-    -e INTERFACE=wlan0 \
-    -e OUTGOINGS=eth0 \
-    -e HT_CAPAB=[HT40][SHORT-GI-20][DSSS_CCK-40] \
-    -v/home/pi/zeek-box/open_vpn_conf_files:/opt/openvpn \
-    -v/home/pi/zeek-box/open_vpn_conf_files/auth.txt:/etc/openvpn/auth.txt \
-    -e OPEN_VPN_CONF_FILE=/opt/openvpn/us2853.nordvpn.com.udp1194.ovpn \
-    --net host --privileged zeek_box /bin/bash
-```
-
+To run the docker container: `make run`
 
 Note: If you want to use OpenVPN username/password auth, for now you need to volume bind an auth.txt file into the container
 at `/etc/openvpn/auth.txt` with your username on one line and your password on the next. You also need to bring in your OpenVPN
@@ -50,6 +45,9 @@ One final note: in the .ovpn files, change `auth-user-pass` to `auth-user-pass a
 NordVPN Conf files: https://nordvpn.com/ovpn/
 
 TODO This whole explanation above needs to be cleaned up
+
+## E-Ink Display
+I'm using an eInk display from Waveshare (link to Amazon)
 
 ## Things to use later:
 * https://github.com/SebastianJ/nordvpn-api

@@ -36,6 +36,8 @@ try:
     draw.text((10, 0), 'External IP: ' + ip_info["ip"], font = font18, fill = 0)
     draw.text((10, 20), '' + ip_info["city"] + ", " + ip_info["region"], font = font18, fill = 0)
     draw.text((10, 40), "Country: " + ip_info["country"], font=font18, fill=0)
+    draw.text((10, 120), "SSID: " + str(os.environ['SSID']), font=font18, fill=0)
+    draw.text((10, 140), "Password: " + str(os.environ['WPA_PASSPHRASE']), font=font18, fill=0)
     #draw.line((20, 50, 70, 100), fill = 0)
     #draw.line((70, 50, 20, 100), fill = 0)
     #draw.rectangle((20, 50, 70, 100), outline = 0)

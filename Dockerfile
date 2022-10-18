@@ -10,14 +10,10 @@ RUN apt-get update && \
 # hostapd stuff taken from https://github.com/offlinehacker/docker-ap/blob/master/Dockerfile
 #RUN apt-get install -y bash hostapd iptables isc-dhcp-server iproute2 iw rfkill net-tools && curl -sSL https://get.docker.com | sh
 RUN apt-get install -y hostapd dnsmasq iptables net-tools rfkill iw bash
-ADD wlanstart.sh /bin/wlanstart.sh
-ADD collector/ /opt/collector/
 
 RUN apt-get install -y ruby-full
 # OpenVPN
 RUN apt-get install -y openvpn wget vim
-ADD start.sh /bin/start.sh
-ADD utils/ /opt/utils/
 
 RUN apt-get update && apt-get -y install python3-rpi.gpio python-dev wget gcc make wiringpi git
     #cd /opt && wget http://www.airspayce.com/mikem/bcm2835/bcm2835-1.71.tar.gz
@@ -30,7 +26,11 @@ RUN apt-get update && \
     cd /opt/ && git clone https://github.com/waveshare/e-Paper/ && \
     cd e-Paper/RaspberryPi_JetsonNano/python && pip3 install .
 
+ADD wlanstart.sh /bin/wlanstart.sh
+ADD collector/ /opt/collector/
 ADD ./waveshare_integration /opt/waveshare/
+ADD start.sh /bin/start.sh
+ADD utils/ /opt/utils/
 
 # Default WAP info
 ENV SSID private
