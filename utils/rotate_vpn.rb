@@ -8,7 +8,7 @@ end
 
 puts "Killing any existing OpenVPN instance"
 `pkill openvpn`
-sleep 5
+#sleep 1
 
 puts "Picking a random configuration file and re-running OpenVPN"
 files = Dir.glob("/opt/openvpn/#{country_code}*.ovpn")
