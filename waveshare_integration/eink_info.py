@@ -11,7 +11,7 @@ import sys
 sys.path.append("./lib/")
 
 import logging
-from waveshare_epd import epd2in7
+from waveshare_epd import epd2in7.EPD
 #import epdconfig
 #import epd2in7
 import time
