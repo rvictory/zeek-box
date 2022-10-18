@@ -14,7 +14,7 @@ create_zip = true
 start_ts = 0
 finish_ts = 0
 if ARGV.length > 1
-  start_ts, finish_ts = ARGV[1].split("-")
+  start_ts, finish_ts = ARGV[1].split("-").map {|x| x.to_i}
 end
 ignore_dest_ips = []
 
