@@ -1,5 +1,6 @@
 # Collects the results of running Zeek for a specified time period
 require_relative 'lib/zeek_manager'
+require "mail"
 
 if ARGV.empty?
   puts "How to use:"
@@ -50,23 +51,32 @@ end
 # Create the log Zip file
 
 # Put together the HTML and attach log zip
-puts "------------------------------------"
-puts "Destination IP Report"
-puts "------------------------------------"
+str = ""
+str += "\n" +  "------------------------------------"
+str += "\n" +  "Destination IP Report"
+str += "\n" +  "------------------------------------"
 dest_ips.each do |ip, entries|
-  puts "Source IP: #{ip}"
-  puts entries.map {|x| "\t#{x}"}.join("\n")
-  puts
+  str += "\n" +  "Source IP: #{ip}"
+  str += "\n" +  entries.map {|x| "\t#{x}"}.join("\n")
+  str += "\n"
 end
-puts
-puts "------------------------------------"
-puts "Domain Name Report"
-puts "------------------------------------"
+str += "\n"
+str += "\n" +  "------------------------------------"
+str += "\n" +  "Domain Name Report"
+str += "\n" +  "------------------------------------"
 domain_names.each do |ip, entries|
-  puts "Source IP: #{ip}"
-  puts entries.map {|x| "\t#{x}"}.join("\n")
-  puts
+  str += "\n" +  "Source IP: #{ip}"
+  str += "\n" +  entries.map {|x| "\t#{x}"}.join("\n")
+  str += "\n"
 end
-puts
+str += "\n"
 
 # Send the email
+mail = Mail.new do
+  from    'zeek_reports@raptormail.net'
+  to      ENV["REPORT_EMAIL"]
+  subject "Zeek Report at #{Time.now.to_s}"
+  body    str
+end
+
+mail.deliver
