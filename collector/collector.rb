@@ -52,24 +52,24 @@ end
 
 # Put together the HTML and attach log zip
 str = ""
-str += "\n" +  "------------------------------------"
-str += "\n" +  "Destination IP Report"
-str += "\n" +  "------------------------------------"
+str += "<br />" +  "------------------------------------"
+str += "<br />" +  "Destination IP Report"
+str += "<br />" +  "------------------------------------"
 dest_ips.each do |ip, entries|
-  str += "\n" +  "Source IP: #{ip}"
-  str += "\n" +  entries.map {|x| "\t#{x}"}.join("\n")
-  str += "\n"
+  str += "<br />" +  "Source IP: #{ip}"
+  str += "<br />" +  entries.map {|x| "\t#{x}"}.join("<br />")
+  str += "<br />"
 end
-str += "\n"
-str += "\n" +  "------------------------------------"
-str += "\n" +  "Domain Name Report"
-str += "\n" +  "------------------------------------"
+str += "<br />"
+str += "<br />" +  "------------------------------------"
+str += "<br />" +  "Domain Name Report"
+str += "<br />" +  "------------------------------------"
 domain_names.each do |ip, entries|
-  str += "\n" +  "Source IP: #{ip}"
-  str += "\n" +  entries.map {|x| "\t#{x}"}.join("\n")
-  str += "\n"
+  str += "<br />" +  "Source IP: #{ip}"
+  str += "<br />" +  entries.map {|x| "\t#{x}"}.join("<br />")
+  str += "<br />"
 end
-str += "\n"
+str += "<br />"
 
 # Send the email
 emailer = SESEmailer.new
