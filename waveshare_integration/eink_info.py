@@ -19,18 +19,18 @@ logging.basicConfig(level=logging.DEBUG)
 ip_info = json.load(urllib.request.urlopen("https://ipinfo.io/"))
 
 try:
-    logging.info("epd2in7 Demo")
+    #logging.info("epd2in7 Demo")
     epd = epd2in7.EPD()
 
     '''2Gray(Black and white) display'''
-    logging.info("init and Clear")
+    #logging.info("init and Clear")
     epd.init()
     epd.Clear(0xFF)
-    font24 = ImageFont.truetype(os.path.join(os.path.realpath(__file__), "resources/Font.ttc"), 24)
-    font18 = ImageFont.truetype(os.path.join(os.path.realpath(__file__), "resources/Font.ttc"), 18)
-    font35 = ImageFont.truetype(os.path.join(os.path.realpath(__file__), "resources/Font.ttc"), 35)
+    font24 = ImageFont.truetype(os.path.join(os.path.dirname(os.path.realpath(__file__)), "resources/Font.ttc"), 24)
+    font18 = ImageFont.truetype(os.path.join(os.path.dirname(os.path.realpath(__file__)), "resources/Font.ttc"), 18)
+    font35 = ImageFont.truetype(os.path.join(os.path.dirname(os.path.realpath(__file__)), "resources/Font.ttc"), 35)
     # Drawing on the Horizontal image
-    logging.info("1.Drawing on the Horizontal image...")
+    #logging.info("1.Drawing on the Horizontal image...")
     Himage = Image.new('1', (epd.height, epd.width), 255)  # 255: clear the frame
     draw = ImageDraw.Draw(Himage)
     draw.text((10, 0), 'External IP: ' + ip_info["ip"], font = font18, fill = 0)
@@ -49,7 +49,7 @@ try:
 
     #logging.info("Clear...")
     #epd.Clear(0xFF)
-    logging.info("Goto Sleep...")
+    #logging.info("Goto Sleep...")
     epd.sleep()
 
 except IOError as e:
