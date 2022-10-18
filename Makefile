@@ -25,7 +25,7 @@ logs:
 	sudo docker logs zeek_box_instance
 
 rotate_vpn:
-	sudo docker exec -it zeek_box_instance "ruby /opt/utils/rotate_vpn.rb us"
+	sudo docker exec -it zeek_box_instance ruby /opt/utils/rotate_vpn.rb us
 
 download_nordvpn_files:
-	sudo docker exec -it zeek_box_instance "cd /opt/openvpn/ && ruby /opt/utils/get_nordvpn_conf_files.rb"
+	sudo docker exec -it zeek_box_instance cd /opt/openvpn/ && ruby /opt/utils/get_nordvpn_conf_files.rb
