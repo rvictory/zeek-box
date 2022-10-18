@@ -116,6 +116,9 @@ iptables-nft -C FORWARD -i tun0 -o wlan0 -m state --state RELATED,ESTABLISHED -j
 iptables-nft -C FORWARD -i wlan0 -o tun0 -j ACCEPT || iptables-nft -A FORWARD -i wlan0 -o tun0 -j ACCEPT
 iptables -A INPUT -i tun0 -p tcp -m tcp --dport 22 -j DROP
 
+# Start the eInk display
+python3 /opt/waveshare/eink_info.py &
+
 echo "Complete, looping indefinitely"
 while true; do sleep 1; done;
 
