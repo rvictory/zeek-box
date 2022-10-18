@@ -7,7 +7,9 @@ RUN apt-get update && apt-get -y install python3-rpi.gpio python-dev wget gcc ma
 RUN apt-get update && \
     apt-get install -y python3-pip python3-pil python3-numpy && \
     pip3 install RPi.GPIO && \
-    pip3 install spidev
+    pip3 install spidev && \
+    cd /opt/ && git clone https://github.com/waveshare/e-Paper/ && \
+    cd e-Paper/RaspberryPi_JetsonNano/python && pip3 install .
 
 ADD . /opt/waveshare/
 

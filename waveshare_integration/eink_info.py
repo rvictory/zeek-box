@@ -1,19 +1,15 @@
 #!/usr/bin/python
 # -*- coding:utf-8 -*-
-import sys
 import os
 import json
 import urllib
 import urllib.request
 #picdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'pic')
 #libdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'lib')
-import sys
-sys.path.append("./lib/")
+#sys.path.append("./lib/")
 
 import logging
-from waveshare_epd import epd2in7.EPD
-#import epdconfig
-#import epd2in7
+from waveshare_epd import epd2in7
 import time
 from PIL import Image,ImageDraw,ImageFont
 import traceback
@@ -23,7 +19,6 @@ logging.basicConfig(level=logging.DEBUG)
 ip_info = json.load(urllib.request.urlopen("https://ipinfo.io/"))
 
 try:
-
     logging.info("epd2in7 Demo")
     epd = epd2in7.EPD()
 
@@ -31,9 +26,9 @@ try:
     logging.info("init and Clear")
     epd.init()
     epd.Clear(0xFF)
-    font24 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
-    font18 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 18)
-    font35 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 35)
+    font24 = ImageFont.truetype(os.path.join("./resources/", 'Font.ttc'), 24)
+    font18 = ImageFont.truetype(os.path.join("./resources/", 'Font.ttc'), 18)
+    font35 = ImageFont.truetype(os.path.join("./resources/", 'Font.ttc'), 35)
     # Drawing on the Horizontal image
     logging.info("1.Drawing on the Horizontal image...")
     Himage = Image.new('1', (epd.height, epd.width), 255)  # 255: clear the frame
