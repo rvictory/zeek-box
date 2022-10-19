@@ -75,7 +75,7 @@ domain_names.each do |ip, entries|
 </tr>
 </thead>
 <tbody>
-#{entries.map {|x| "<tr><td>#{x}</td></tr>"}}
+#{entries.map {|x| "<tr><td>#{x}</td></tr>"}.join("\n")}
 </tbody>
 </table>
 END
