@@ -107,7 +107,8 @@ iptables -t mangle -A OUTPUT -p tcp --sport 22 -j MARK --set-mark 65
 
 # Start the VPN
 echo "Starting OpenVPN"
-openvpn --config $OPEN_VPN_CONF_FILE --daemon
+#openvpn --config $OPEN_VPN_CONF_FILE --daemon
+ruby /opt/utils/rotate_vpn.rb
 
 # Configure the VPN iptables rules
 echo "Configuring VPN rules so wlan0 goes out tun0"

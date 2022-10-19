@@ -1,4 +1,15 @@
 # Collects the results of running Zeek for a specified time period
+# Things we want to outline:
+# * DNS Queries including a relative order they were made
+# * Flow information and include any likely associated domain names
+# * HTTP Signals such as User-Agents observed
+# * TLS Certificates observed
+# * Some heuristics to pull out the most "interesting" bits from all of that and put it at the top
+# * Augment the data with WHOIS and other intel
+# * Extract and attach the zeek logs as a zip file
+# * PCAP?
+# * If we have mitmproxy, we'll need to pull out those logs separately
+# * Related: if we have mitmproxy, can Zeek handle decrypting traffic?
 require_relative 'lib/zeek_manager'
 require_relative 'lib/ses_emailer'
 
