@@ -64,9 +64,21 @@ str += "<br />"
 str += "<br />" +  "------------------------------------"
 str += "<br />" +  "Domain Name Report"
 str += "<br />" +  "------------------------------------"
+
 domain_names.each do |ip, entries|
-  str += "<br />" +  "Source IP: #{ip}"
-  str += "<br />" +  entries.map {|x| "\t#{x}"}.join("<br />")
+  str += <<END
+<h3>Source IP: #{ip}</h3>
+<table>
+<thead>
+<tr>
+<th>Domain Name</th>
+</tr>
+</thead>
+<tbody>
+#{entries.map {|x| "<tr><td>#{x}</td></tr>"}}
+</tbody>
+</table>
+END
   str += "<br />"
 end
 str += "<br />"
