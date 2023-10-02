@@ -5,6 +5,7 @@ build:
 run:
 	mkdir -p /home/pi/zeek_logs
 	mkdir -p /home/pi/zeek-box/open_vpn_conf_files
+	mkdir -p /home/pi/mitm_certs
 	sudo docker kill zeek_box_instance || true
 	sudo docker rm zeek_box_instance || true
 	sudo docker run -d \
@@ -16,6 +17,7 @@ run:
         -e AWS_REGION=${AWS_REGION} \
         -e HT_CAPAB=[HT40][SHORT-GI-20][DSSS_CCK-40] \
         -v/home/pi/zeek_logs:/opt/zeek_logs \
+        -v/home/pi/mitm_certs:/root/.mitmproxy/ \
         -v/home/pi/zeek-box/open_vpn_conf_files:/opt/openvpn \
         -v/home/pi/zeek-box/open_vpn_conf_files/auth.txt:/etc/openvpn/auth.txt \
         -e OPEN_VPN_CONF_FILE=/opt/openvpn/us2853.nordvpn.com.udp1194.ovpn \
