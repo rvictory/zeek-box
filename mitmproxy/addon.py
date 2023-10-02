@@ -1,18 +1,22 @@
 """
 Basic skeleton of a mitmproxy addon.
 
-Run as follows: mitmproxy -s anatomy.py
 """
 from mitmproxy import ctx
 
 
-class Counter:
+class HTTPRewriter:
     def __init__(self):
         self.num = 0
 
-    def request(self, flow):
+    def response(self, flow):
+        if flow.request.host == "example.com":
+            ctx.log.info("Rewriting response from example.com")
+            flow.response.content.replace(
+                        b"Example Domain", b"Example Domain Rewritten"
+                    )
         self.num = self.num + 1
         ctx.log.info("We've seen %d flows" % self.num)
 
 
-addons = [Counter()]
+addons = [HTTPRewriter()]
