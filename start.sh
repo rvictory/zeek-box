@@ -121,6 +121,11 @@ iptables-nft -C FORWARD -i tun0 -o wlan0 -m state --state RELATED,ESTABLISHED -j
 iptables-nft -C FORWARD -i wlan0 -o tun0 -j ACCEPT || iptables-nft -A FORWARD -i wlan0 -o tun0 -j ACCEPT
 iptables -A INPUT -i tun0 -p tcp -m tcp --dport 22 -j DROP
 
+# mitmproxy
+iptables -t nat -A PREROUTING -i wlan0 -p tcp --dport 80 -j REDIRECT --to-port 8080
+iptables -t nat -A PREROUTING -i wlan0 -p tcp --dport 443 -j REDIRECT --to-port 8080
+
+
 # Start the eInk display
 python3 /opt/waveshare/eink_info.py &
 
