@@ -15,7 +15,7 @@ class HTTPRewriter:
         if True: #flow.request.pretty_host == "example.com":
             ctx.log.info("Rewriting response from example.com")
             flow.response.content = bytes(flow.response.content.decode("utf-8").replace(
-                        "the", "THE"
+                        "Trump", "Dumbass"
                     ),
             "utf-8")
         self.num = self.num + 1
