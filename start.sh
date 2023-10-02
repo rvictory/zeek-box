@@ -104,6 +104,10 @@ echo "Flushing the route cache"
 ip route flush cache
 echo "Adding the iptables rule to tag the traffic"
 iptables -t mangle -A OUTPUT -p tcp --sport 22 -j MARK --set-mark 65
+iptables -t mangle -A OUTPUT -p tcp --sport 8081 -j MARK --set-mark 65
+
+# Start mitmproxy
+
 
 # Start the VPN
 echo "Starting OpenVPN"
