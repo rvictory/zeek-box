@@ -20,7 +20,7 @@ RUN apt-get update && apt-get -y install python3-rpi.gpio python-dev wget gcc ma
     #tar zxvf bcm2835-1.71.tar.gz && cd bcm2835-1.71/ && ./configure && make && make check && make install
 
 RUN apt-get update && \
-    apt-get install -y python3-pip python3-pil python3-numpy && \
+    apt-get install -y python3-pip python3-pil python3-numpy mitmproxy && \
     pip3 install RPi.GPIO && \
     pip3 install spidev && \
     pip3 install gpiozero && \

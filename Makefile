@@ -20,6 +20,7 @@ run:
         -v/home/pi/zeek-box/open_vpn_conf_files/auth.txt:/etc/openvpn/auth.txt \
         -e OPEN_VPN_CONF_FILE=/opt/openvpn/us2853.nordvpn.com.udp1194.ovpn \
         --device /dev/mem \
+        -p 127.0.0.1:8081:8081 \
         --net host --privileged --rm --name zeek_box_instance zeek_box /bin/bash
 
 stop:
