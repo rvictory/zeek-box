@@ -15,7 +15,7 @@ class HTTPRewriter:
         if flow.request.pretty_host == "example.com":
             ctx.log.info("Rewriting response from example.com")
             flow.response.content.replace(
-                        b"Example Domain", b"Example Domain Rewritten"
+                        b"domain", b"dog"
                     )
         self.num = self.num + 1
         ctx.log.info("We've seen %d flows" % self.num)
