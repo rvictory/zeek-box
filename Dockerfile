@@ -33,6 +33,7 @@ RUN gem install bundler && cd /opt/collector && bundle install
 ADD ./waveshare_integration /opt/waveshare/
 ADD start.sh /bin/start.sh
 ADD utils/ /opt/utils/
+ADD mitmproxy/ /opt/mitmproxy/
 
 # Default WAP info
 ENV SSID private
