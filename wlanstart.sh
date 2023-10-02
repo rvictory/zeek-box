@@ -89,8 +89,6 @@ iptables -t nat -A POSTROUTING -o ${OUTGOINGS} -j MASQUERADE
 iptables-nft -t nat -C POSTROUTING -o eth0 -j MASQUERADE || iptables-nft -t nat -A POSTROUTING -o eth0 -j MASQUERADE
 iptables-nft -C FORWARD -i eth0 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT || iptables-nft -A FORWARD -i eth0 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT
 iptables-nft -C FORWARD -i wlan0 -o eth0 -j ACCEPT || iptables-nft -A FORWARD -i wlan0 -o eth0 -j ACCEPT
-iptables -t nat -A PREROUTING -i wlan0 -p tcp --dport 80 -j REDIRECT --to-port 8080
-iptables -t nat -A PREROUTING -i wlan0 -p tcp --dport 443 -j REDIRECT --to-port 8080
 
 #if [ "${OUTGOINGS}" ] ; then
 #   ints="$(sed 's/,\+/ /g' <<<"${OUTGOINGS}")"
@@ -131,6 +129,9 @@ EOF
 
 echo "Starting DHCP server .."
 dhcpd ${INTERFACE}
+
+iptables -t nat -A PREROUTING -i wlan0 -p tcp --dport 80 -j REDIRECT --to-port 8080
+iptables -t nat -A PREROUTING -i wlan0 -p tcp --dport 443 -j REDIRECT --to-port 8080
 
 echo "Starting HostAP daemon ..."
 /usr/sbin/hostapd -B -f ~/hostapd.log /etc/hostapd.conf &
