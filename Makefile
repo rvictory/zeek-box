@@ -21,6 +21,7 @@ run:
         -v/home/pi/mitm_certs:/root/.mitmproxy/ \
         -v/home/pi/zeek-box/open_vpn_conf_files:/opt/openvpn \
         -v/home/pi/zeek-box/open_vpn_conf_files/auth.txt:/etc/openvpn/auth.txt \
+        -v/home/pi/zeek-box/open_vpn_conf_files/starvpn_auth.txt:/etc/openvpn/starvpn_auth.txt \
         -e OPEN_VPN_CONF_FILE=/opt/openvpn/us2853.nordvpn.com.udp1194.ovpn \
         --device /dev/mem \
         --net host --privileged --rm --name zeek_box_instance zeek_box /bin/bash
