@@ -10,9 +10,15 @@ puts "Killing any existing OpenVPN instance"
 `pkill openvpn`
 #sleep 1
 
-puts "Picking a random configuration file and re-running OpenVPN"
-files = Dir.glob("/opt/openvpn/#{country_code}*.ovpn")
-file = files.shuffle.first
-Dir.chdir("/opt/openvpn")
-puts "Using #{file}"
-`openvpn --config #{file} --daemon`
+if ENV.has_key?("USE_STARVPN")
+  puts "Using StarVPN"
+  Dir.chdir("/opt/openvpn")
+  `openvpn --config /opt/openvpn/starvpn.ovpn --daemon`
+else
+  puts "Picking a random configuration file and re-running OpenVPN"
+  files = Dir.glob("/opt/openvpn/#{country_code}*.ovpn")
+  file = files.shuffle.first
+  Dir.chdir("/opt/openvpn")
+  puts "Using #{file}"
+  `openvpn --config #{file} --daemon`
+end

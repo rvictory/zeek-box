@@ -55,3 +55,9 @@ I'm using an eInk display from Waveshare (link to Amazon)
 #### Test Data
 Some of the test data (in `tests/data/logs`) has been sourced from https://github.com/brimdata/zed-sample-data and is licensed under the
 license terms found in that repository (Creative Commons Attribution-ShareAlike 4.0 International License as of October 9th, 2022)
+
+## Using StarVPN
+* Set the environmental variable "USE_STARVPN" to anything
+* Add your StarVPN configuration file to your open_vpn_conf_files directory (call it `starvpn.ovpn`)
+* Make sure your username and password are in the configuration file
+* Rotation won't work after this (TODO add API rotation)
