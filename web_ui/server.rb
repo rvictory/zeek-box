@@ -2,6 +2,7 @@ require "sinatra/base"
 require "puma"
 require "json"
 require_relative 'lib/eink_updater'
+require_relative 'lib/utils'
 
 class Server < Sinatra::Base
 
