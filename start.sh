@@ -123,7 +123,7 @@ iptables-nft -C FORWARD -i wlan0 -o tun0 -j ACCEPT || iptables-nft -A FORWARD -i
 iptables -A INPUT -i tun0 -p tcp -m tcp --dport 22 -j DROP
 
 # mitmproxy
-./enable_mitmproxy.sh
+/bin/enable_mitmproxy.sh
 
 # Start the eInk display
 python3 /opt/waveshare/eink_info.py &
