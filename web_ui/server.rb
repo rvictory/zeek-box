@@ -31,8 +31,18 @@ class Server < Sinatra::Base
 
   get "/rotate_vpn" do
     `ruby /opt/utils/rotate_vpn.rb us`
-    sleep 5
+    sleep 10
     EInkUpdater.trigger_refresh
+    redirect "/"
+  end
+
+  get "/enable_mitmproxy" do
+    `/bin/enable_mitmproxy.sh`
+    redirect "/"
+  end
+
+  get "/disable_mitmproxy" do
+    `/bin/disable_mitmproxy.sh`
     redirect "/"
   end
 

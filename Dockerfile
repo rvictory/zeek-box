@@ -28,19 +28,19 @@ RUN apt-get update && \
     cd e-Paper/RaspberryPi_JetsonNano/python && pip3 install . && \
     mkdir /opt/web_ui/
 
+ADD web_ui/Gemfile /opt/web_ui/Gemfile
+RUN cd /opt/web_ui && bundle install
+
 ADD wlanstart.sh /bin/wlanstart.sh
 ADD collector/ /opt/collector/
 RUN gem install bundler && cd /opt/collector && bundle install
 ADD ./waveshare_integration /opt/waveshare/
 ADD start.sh /bin/start.sh
+ADD enable_mitmproxy.sh /bin/enable_mitmproxy.sh
+ADD disable_mitmproxy.sh /bin/disable_mitmproxy.sh
 ADD utils/ /opt/utils/
 ADD mitmproxy/ /opt/mitmproxy/
-
-ADD web_ui/Gemfile /opt/web_ui/Gemfile
-RUN cd /opt/web_ui && bundle install
-
 ADD web_ui/ /opt/web_ui/
-
 
 # Default WAP info
 ENV SSID private

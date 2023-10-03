@@ -74,7 +74,7 @@ def printToDisplay(string):
 def rotate_vpn():
     printToDisplay("Rotating VPN...")
     os.system("ruby /opt/utils/rotate_vpn.rb us")
-    time.sleep(5)
+    time.sleep(10)
     print_ip_info()
 
 def print_ip_info():
