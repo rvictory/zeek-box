@@ -129,6 +129,9 @@ iptables -t nat -A PREROUTING -i wlan0 -p tcp --dport 443 -j REDIRECT --to-port 
 # Start the eInk display
 python3 /opt/waveshare/eink_info.py &
 
+# Start the Web UI
+ruby /opt/web_ui/server.rb &
+
 echo "Complete, looping indefinitely"
 while true; do sleep 1; done;
 
