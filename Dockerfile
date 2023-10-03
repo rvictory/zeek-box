@@ -25,7 +25,8 @@ RUN apt-get update && \
     pip3 install spidev && \
     pip3 install gpiozero && \
     cd /opt/ && git clone https://github.com/waveshare/e-Paper/ && \
-    cd e-Paper/RaspberryPi_JetsonNano/python && pip3 install .
+    cd e-Paper/RaspberryPi_JetsonNano/python && pip3 install . && \
+    mkdir /opt/web_ui/
 
 ADD wlanstart.sh /bin/wlanstart.sh
 ADD collector/ /opt/collector/
