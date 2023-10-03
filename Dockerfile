@@ -36,7 +36,7 @@ ADD start.sh /bin/start.sh
 ADD utils/ /opt/utils/
 ADD mitmproxy/ /opt/mitmproxy/
 
-ADD web_ui/Gemfile /opt/mitmproxy/Gemfile
+ADD web_ui/Gemfile /opt/web_ui/Gemfile
 RUN cd /opt/web_ui && bundle install
 
 ADD web_ui/ /opt/web_ui/
