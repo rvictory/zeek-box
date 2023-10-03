@@ -6,6 +6,7 @@ import urllib
 import urllib.request
 import RPi.GPIO as GPIO
 from signal import pause
+import signal
 import time
 #picdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'pic')
 #libdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'lib')
@@ -18,6 +19,9 @@ from PIL import Image,ImageDraw,ImageFont
 import traceback
 
 from gpiozero import Button
+
+with open('/opt/waveshare/pid', 'w', encoding='utf-8') as f:
+    f.write(str(os.getpid()))
 
 zeek_start_time = time.time()
 zeek_finish_time = time.time()
@@ -123,6 +127,11 @@ btn1.when_pressed = handleBtnPress
 btn2.when_pressed = handleBtnPress
 btn3.when_pressed = handleBtnPress
 btn4.when_pressed = handleBtnPress
+
+def refresh_signal_handler(sig, frame):
+    print_ip_info()
+
+signal.signal(signal.SIGUSR1, refresh_signal_handler)
 
 try:
     print_ip_info()

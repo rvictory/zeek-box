@@ -1,6 +1,7 @@
 require "sinatra/base"
 require "puma"
 require "json"
+require_relative 'lib/eink_updater'
 
 class Server < Sinatra::Base
 
@@ -26,6 +27,13 @@ class Server < Sinatra::Base
       :org => ip_info["org"]
     }
     erb :index
+  end
+
+  get "/rotate_vpn" do
+    `ruby /opt/utils/rotate_vpn.rb us`
+    sleep 5
+    EInkUpdater.trigger_refresh
+    redirect "/"
   end
 
 end
