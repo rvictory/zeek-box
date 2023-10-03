@@ -105,6 +105,7 @@ ip route flush cache
 echo "Adding the iptables rule to tag the traffic"
 iptables -t mangle -A OUTPUT -p tcp --sport 22 -j MARK --set-mark 65
 iptables -t mangle -A OUTPUT -p tcp --sport 8081 -j MARK --set-mark 65
+iptables -t mangle -A OUTPUT -p tcp --sport 4567 -j MARK --set-mark 65
 
 # Start mitmproxy
 /usr/bin/mitmweb --mode transparent --set web_iface=0.0.0.0 -s /opt/mitmproxy/addon.py &

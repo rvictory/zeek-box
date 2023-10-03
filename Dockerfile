@@ -34,9 +34,12 @@ ADD ./waveshare_integration /opt/waveshare/
 ADD start.sh /bin/start.sh
 ADD utils/ /opt/utils/
 ADD mitmproxy/ /opt/mitmproxy/
+
+ADD web_ui/Gemfile /opt/mitmproxy/Gemfile
+RUN cd /opt/web_ui && bundle install
+
 ADD web_ui/ /opt/web_ui/
 
-RUN cd /opt/web_ui && bundle install
 
 # Default WAP info
 ENV SSID private
