@@ -52,6 +52,7 @@ def handleBtnPress(btn):
             is_zeek_recording = False
             dump_zeek()
     elif pinNum == 19:
+        printToDisplay("Rebooting the system")
         os.system("reboot now")
 
 logging.basicConfig(level=logging.DEBUG)
@@ -83,7 +84,11 @@ def print_ip_info():
     epd = epd2in7.EPD()
     epd.init()
     epd.Clear(0xFF)
-    ip_info = json.load(urllib.request.urlopen("https://ipinfo.io/"))
+    try:
+        ip_info = json.load(urllib.request.urlopen("https://ipinfo.io/"))
+    except:
+        printToDisplay("Couldn't retrieve external IP")
+        return
     try:
         #logging.info("epd2in7 Demo")
 
