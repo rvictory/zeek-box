@@ -9,4 +9,8 @@ class Utils
     !/mitmproxy/.match(iptables_info).nil?
   end
 
+  def self.is_killswitch_active?
+    File.exist?("/opt/killswitch")
+  end
+
 end

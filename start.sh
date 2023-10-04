@@ -152,6 +152,9 @@ python3 /opt/waveshare/eink_info.py &
 # Start the Web UI
 ruby /opt/web_ui/server.rb &
 
+# Start the killswitch
+ruby /opt/utils/killswitch.rb &
+
 echo "Complete, looping indefinitely"
 while true; do sleep 1; done;
 
