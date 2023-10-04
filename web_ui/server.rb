@@ -28,6 +28,7 @@ class Server < Sinatra::Base
       :state => ip_info["region"],
       :org => ip_info["org"]
     }
+    EInkUpdater.trigger_refresh
     erb :index
   end
 
