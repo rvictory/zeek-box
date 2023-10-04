@@ -1,5 +1,6 @@
 #!/bin/bash -e
 
+# TODO: see https://serverfault.com/questions/991217/iptables-drop-all-non-vpn-packets-exiting-the-eth0-access-point
 # Start up the Wireless Access Point
 #/bin/wlanstart.sh
 
@@ -135,6 +136,11 @@ echo "Configuring VPN rules so wlan0 goes out tun0"
 iptables -t nat -A POSTROUTING -o tun0 -j MASQUERADE
 iptables-nft -C FORWARD -i tun0 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT || iptables-nft -A FORWARD -i tun0 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT
 iptables-nft -C FORWARD -i wlan0 -o tun0 -j ACCEPT || iptables-nft -A FORWARD -i wlan0 -o tun0 -j ACCEPT
+
+# Never let wlan0 traffic out of eth0
+# TODO use variables
+iptables-nft -C FORWARD -i wlan0 -o eth0 -j DROP || iptables-nft -A FORWARD -i wlan0 -o eth0 -j DROP
+
 iptables -A INPUT -i tun0 -p tcp -m tcp --dport 22 -j DROP
 
 # mitmproxy

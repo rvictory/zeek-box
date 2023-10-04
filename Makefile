@@ -16,7 +16,6 @@ run:
         -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
         -e AWS_REGION=${AWS_REGION} \
         -e HT_CAPAB=[HT40][SHORT-GI-20][DSSS_CCK-40] \
-        -e USE_STARVPN=true \
         -v/home/pi/zeek_logs:/opt/zeek_logs \
         -v/home/pi/mitm_certs:/root/.mitmproxy/ \
         -v/home/pi/zeek-box/open_vpn_conf_files:/opt/openvpn \
