@@ -110,10 +110,25 @@ iptables -t mangle -A OUTPUT -p tcp --sport 4567 -j MARK --set-mark 65
 # Start mitmproxy
 /usr/bin/mitmweb --mode transparent --set web_iface=0.0.0.0 -s /opt/mitmproxy/addon.py &
 
+# Set iptables default to drop everything
+iptables -P OUTPUT DROP
+iptables -P INPUT DROP
+iptables -P FORWARD DROP
+
 # Start the VPN
 echo "Starting OpenVPN"
+groupadd -r openvpn
 #openvpn --config $OPEN_VPN_CONF_FILE --daemon
 ruby /opt/utils/rotate_vpn.rb
+
+# See https://security.stackexchange.com/questions/183177/openvpn-kill-switch-on-linux/183361#183361
+iptables -A OUTPUT -j ACCEPT -m owner --gid-owner openvpn
+# The loopback device is harmless, and TUN is required for the VPN.
+iptables -A OUTPUT -j ACCEPT -o lo
+iptables -A OUTPUT -j ACCEPT -o tun+
+
+# We should permit replies to traffic we've sent out.
+iptables -A INPUT -j ACCEPT -m state --state ESTABLISHED
 
 # Configure the VPN iptables rules
 echo "Configuring VPN rules so wlan0 goes out tun0"
