@@ -11,6 +11,7 @@ class Server < Sinatra::Base
   end
 
   get "/" do
+    @title = "Home"
     ip_info = `curl https://ipinfo.io/`
     begin
       ip_info = JSON.parse(ip_info)
@@ -32,6 +33,7 @@ class Server < Sinatra::Base
 
   get "/kill_vpn" do
     `pkill openvpn`
+    EInkUpdater.trigger_refresh
     redirect "/"
   end
 

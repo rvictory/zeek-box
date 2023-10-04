@@ -81,6 +81,7 @@ def rotate_vpn():
     print_ip_info()
 
 def print_ip_info():
+    killswitch_active = os.path.isfile("/opt/killswitch")
     epd = epd2in7.EPD()
     epd.init()
     epd.Clear(0xFF)
@@ -106,6 +107,8 @@ def print_ip_info():
         draw.text((10, 0), 'External IP: ' + ip_info["ip"], font = font18, fill = 0)
         draw.text((10, 20), '' + ip_info["city"] + ", " + ip_info["region"], font = font18, fill = 0)
         draw.text((10, 40), "Country: " + ip_info["country"], font=font18, fill=0)
+        if killswitch_active:
+            draw.text((10, 60), "KILLSWITCH ACTIVE", font=font24, fill=0)
         draw.text((10, 130), "SSID: " + str(os.environ['SSID']), font=font12, fill=0)
         draw.text((10, 145), "Password: " + str(os.environ['WPA_PASSPHRASE']) + "   ", font=font12, fill=0)
         if is_zeek_recording:
