@@ -140,6 +140,7 @@ btn4.when_pressed = handleBtnPress
 
 def refresh_signal_handler(sig, frame):
     print_ip_info()
+    pause()
 
 signal.signal(signal.SIGUSR1, refresh_signal_handler)
 

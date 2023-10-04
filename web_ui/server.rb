@@ -34,14 +34,12 @@ class Server < Sinatra::Base
 
   get "/kill_vpn" do
     `pkill openvpn`
-    EInkUpdater.trigger_refresh
     redirect "/"
   end
 
   get "/rotate_vpn" do
     `ruby /opt/utils/rotate_vpn.rb us`
     sleep 10
-    EInkUpdater.trigger_refresh
     redirect "/"
   end
 
