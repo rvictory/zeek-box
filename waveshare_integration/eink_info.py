@@ -51,6 +51,8 @@ def handleBtnPress(btn):
             zeek_finish_time = int(time.time())
             is_zeek_recording = False
             dump_zeek()
+    elif pinNum == 19:
+        os.system("reboot now")
 
 logging.basicConfig(level=logging.DEBUG)
 
