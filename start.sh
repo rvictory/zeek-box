@@ -93,6 +93,11 @@ echo "Starting Zeek"
 #iptables -t nat -F
 #iptables -X
 
+# Set iptables default to drop everything
+iptables -P OUTPUT DROP
+iptables -P INPUT DROP
+iptables -P FORWARD DROP
+
 # Allow SSH to still work over eth0 (https://serverfault.com/questions/425493/anonymizing-openvpn-allow-ssh-access-to-internal-server)
 echo "Setting RT Table"
 echo "201 novpn" >> /etc/iproute2/rt_tables
@@ -110,10 +115,6 @@ iptables -t mangle -A OUTPUT -p tcp --sport 4567 -j MARK --set-mark 65
 # Start mitmproxy
 /usr/bin/mitmweb --mode transparent --set web_iface=0.0.0.0 -s /opt/mitmproxy/addon.py &
 
-# Set iptables default to drop everything
-iptables -P OUTPUT DROP
-iptables -P INPUT DROP
-iptables -P FORWARD DROP
 
 # Start the VPN
 echo "Starting OpenVPN"
