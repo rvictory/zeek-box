@@ -6,7 +6,7 @@ sleep_duration = 0.5
 while true do
   sleep sleep_duration
   begin
-    ifconfig = `ifconfig tun0`
+    ifconfig = `ifconfig tun0 2>&1`
   rescue
     next
   end
