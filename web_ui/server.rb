@@ -30,6 +30,11 @@ class Server < Sinatra::Base
     erb :index
   end
 
+  get "/kill_vpn" do
+    `pkill openvpn`
+    redirect "/"
+  end
+
   get "/rotate_vpn" do
     `ruby /opt/utils/rotate_vpn.rb us`
     sleep 10
