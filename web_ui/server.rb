@@ -6,6 +6,10 @@ require_relative 'lib/utils'
 
 class Server < Sinatra::Base
 
+  ZEEK_LOG_DIR = "/opt/zeek_logs/"
+  @@mutex = Mutex.new
+  @@last_refreshed = Time.now.to_i
+
   configure do
     set :bind, "0.0.0.0"
   end
@@ -28,7 +32,16 @@ class Server < Sinatra::Base
       :state => ip_info["region"],
       :org => ip_info["org"]
     }
-    EInkUpdater.trigger_refresh
+    @@mutex.synchronize do
+      if Time.now.to_i - @@last_refreshed > 15
+        EInkUpdater.trigger_refresh
+        @@last_refreshed = Time.now.to_i
+      end
+    end
+
+    data = `tail -100 #{File.join(ZEEK_LOG_DIR, "dns.log")}`
+    @zeek_domain_names = data.lines.map {|x| JSON.parse(x)}
+
     erb :index
   end
 
@@ -51,6 +64,12 @@ class Server < Sinatra::Base
   get "/disable_mitmproxy" do
     `/bin/disable_mitmproxy.sh`
     redirect "/"
+  end
+
+  get "/recent_zeek_dns_queries" do
+    data = `tail -100 #{File.join(ZEEK_LOG_DIR, "dns.log")}`
+    parsed = data.lines.map {|x| JSON.parse(x)["query"]}.uniq
+
   end
 
 end

@@ -47,6 +47,23 @@
   </div>
   <div class="col-md-4">
     <h5>Zeek</h5>
+    <strong>Recent DNS Queries</strong>
+    <table class="table table-primary">
+      <thead>
+      <tr>
+        <th>TS</th>
+        <th>Query</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @zeek_domain_names.each do |dns| %>
+      <tr>
+        <td><%= dns["ts"] %></td>
+        <td><%= dns["query"] %></td>
+      </tr>
+      <% end %>
+      </tbody>
+    </table>
   </div>
   <div class="col-md-4">
     <h5>mitmproxy</h5>
