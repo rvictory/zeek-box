@@ -1,18 +1,12 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
   <h1 class="h2">Home
   <% if Utils.is_killswitch_active? %>
-    KILLSWITCH ACTIVATED
+    <span style="color: red;">KILLSWITCH ACTIVATED</span>
   <% end %>
   </h1>
   <div class="btn-toolbar mb-2 mb-md-0">
     <div class="btn-group me-2">
-      <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-      <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
     </div>
-    <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
-      <span data-feather="calendar" class="align-text-bottom"></span>
-      This week
-    </button>
   </div>
 </div>
 
@@ -48,17 +42,17 @@
   <div class="col-md-4">
     <h5>Zeek</h5>
     <strong>Recent DNS Queries</strong>
-    <table class="table table-primary">
+    <table class="table table-striped">
       <thead>
       <tr>
-        <th>TS</th>
+        <th>Timestamp</th>
         <th>Query</th>
       </tr>
       </thead>
       <tbody>
       <% @zeek_domain_names.each do |dns| %>
       <tr>
-        <td><%= dns["ts"] %></td>
+        <td><%= Time.at(dns["ts"]).to_s %></td>
         <td><%= dns["query"] %></td>
       </tr>
       <% end %>
